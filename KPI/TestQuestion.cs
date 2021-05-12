@@ -9,14 +9,7 @@ namespace KPI
     class TestQuestion
     {
         public string question;
-        public string[] options;
+        public List<string> options;
         public int answerIndex;
-
-        public TestQuestion(string question, string[] options, int answerIndex)
-        {
-            this.question = question;
-            this.options = options;
-            this.answerIndex = answerIndex;
-        }
     }
 }
