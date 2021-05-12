@@ -11,5 +11,10 @@ namespace KPI
         public string question;
         public List<string> options;
         public int answerIndex;
+
+        public bool ValidateAnswer(int optionIndex)
+        {
+            return optionIndex == answerIndex;
+        }
     }
 }

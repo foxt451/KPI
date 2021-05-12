@@ -7,7 +7,7 @@ namespace KPI
         static void Main(string[] args)
         {
             Test test = new TestParser().ReadTestFromFile("test1.txt");
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Your score is: " + new TestOutputter().RunTest(test).score);
         }
     }
 }
