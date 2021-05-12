@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -50,7 +50,7 @@ namespace KPI
                     }
                 }
             }
-            output.DoesNotExists(log);
+            output.DoesNotExist(log);
             return false;
         }
     }
