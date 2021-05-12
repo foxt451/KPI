@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -146,7 +146,7 @@ namespace KPI
             Console.WriteLine(line);
             Console.ResetColor();
         }
-        public void DoesNotExists(string login)
+        public void DoesNotExist(string login)
         {
             Console.WriteLine($"{login} does not exists!");
         }
