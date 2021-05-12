@@ -7,42 +7,55 @@ namespace KPI
     public class Output
     {
         public static string login;
-        public static string name;
-        public string path;
-        public string logsFile = @"logins.csv";
-        public string studentsFile = @"students.csv";
-        public string marksFile = @"marks.csv";
+        private static string passw;
+        public string path = @"\UserData\";
         private User _user;
 
         public void StartWork()
         {
-            //FileOperations fo = new FileOperations(path, logsFile);
-            for (int i = 0; i < 3; i++)
+            FileOperations fo = new FileOperations("", "");
+            while (true)
             {
-                while (true)
+                Console.WriteLine("Do you have an account? Enter 1 to YES or 0 to NO");
+                string registered = Console.ReadLine();
+                if (registered=="1")
                 {
-                    Console.Write("Enter your login: ");
-                    login = Console.ReadLine();
-                    if (login != "" && FileOperations.IsExists(login)) break;
-                    WrongInput("Such account doesn't exist! Try another login!");
+                    for (int i = 0; i < 3; i++)
+                    {
+                        while (true)
+                        {
+                            Console.Write("Enter your login: ");
+                            login = Console.ReadLine();
+                            if (login != "" && fo.IsExists(path, login)) break;
+                            WrongInput("Such account doesn't exist! Try another login!");
+                        }
+                        _user = new User(this);
+                        Console.Write("Enter your password: ");
+                        passw = Console.ReadLine();
+                        //string login = Console.ReadLine();
+                        bool flag = _user.Authorization(login, passw);
+                        if (flag) break;
+                    }
+                    Console.Clear();
+                    WrongInput("To many atemptions! Try again later.");
+                    Environment.Exit(1);
                 }
-                //real constructor may be different
-                // if registration
-                //_user = new User(login, password, name, surname, email, phone, this);
-                // users exists
-                _user = new User(this);
-                Console.Write("Enter your password: ");
-                string password = Console.ReadLine();
-                string login = Console.ReadLine();
-                bool flag = _user.Authorization(login, password);
-                if (flag) break;
+
+                if (registered == "0")
+                {
+                    Registration();
+                    _user.Authorization(login, passw);
+                }
+                else
+                {
+                    Console.Clear();
+                    WrongInput();
+                }
             }
-            Console.Clear();
-            WrongInput("To many atemptions! Try again later.");
-            Environment.Exit(1);
+            
         }
 
-        public void Welcome()
+        public void Welcome(string name)
         {
             Console.Clear();
             Console.WriteLine($"Wellcome back, {name}!\n");
@@ -179,5 +192,30 @@ namespace KPI
             }
         }
         public void LineOutput(string line) => Console.WriteLine(line);
+
+        private void Registration()
+        {
+            Console.WriteLine("Do you want to get an account? Enter 1 to YES or 0 to NO");
+            string go = Console.ReadLine();
+            if (go=="0") Environment.Exit(0);
+            //there will be a lot of cycles and validity check
+            Console.WriteLine("Please, enter your full name:");
+            string name = Console.ReadLine();
+            Console.WriteLine("Please, choose your nickname:");
+            login = Console.ReadLine();
+            Console.WriteLine("Please, choose your password:");
+            passw = Console.ReadLine();
+            Console.WriteLine("Please, enter your date of birth:");
+            string birthDate = Console.ReadLine();
+            Console.WriteLine("Please, enter your place of work or study:");
+            string placeOfWork = Console.ReadLine();
+            Console.WriteLine("Please, enter your email:");
+            string email = Console.ReadLine();
+            Console.WriteLine("Please, enter your phoneNumber:");
+            string phoneNumber = Console.ReadLine();
+            
+            FileOperations fo = new FileOperations(path, Output.login+".csv");
+            fo.NewUser(passw, name, birthDate, placeOfWork, email, phoneNumber);
+        }
     }
 }
