@@ -42,5 +42,30 @@ namespace KPI
             output.DoesNotExist(log);
             return false;
         }
+
+        public void ChangePassword(string passw)
+        {
+            fo.ChangeInFile(0, passw);
+        }
+        public void ChangeName(string name)
+        {
+            fo.ChangeInFile(2, name);
+        }
+        public void ChangeBirthDate(string date)
+        {
+            fo.ChangeInFile(3, date);
+        }
+        public void ChangePlaceOfWork(string place)
+        {
+            fo.ChangeInFile(2, place);
+        }
+        public void ChangeEmail(string email)
+        {
+            fo.ChangeInFile(2, email);
+        }
+        public void ChangeNumber(string number)
+        {
+            fo.ChangeInFile(2, number);
+        }
     }
 }
