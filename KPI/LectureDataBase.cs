@@ -17,7 +17,7 @@ namespace KPI
         public List<Lecture> getLectures()
         {
             List<Lecture> lectures = new List<Lecture>();
-            string[] files = Directory.GetFiles("./lectures");
+            string[] files = Directory.GetFiles("../../../Lectures/");
             for (int i = 0; i < files.Length; i++)
             {
                 string name;
