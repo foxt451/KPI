@@ -42,6 +42,22 @@ namespace KPI
             }
         }
 
+        public void OutputAnswerReaction(bool wasCorrect, ConsoleColor defaultColor)
+        {
+            if (wasCorrect)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Correct!");
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Incorrect!");
+            }
+
+            Console.ForegroundColor = defaultColor;
+        }
+
         public (bool wasInterrupted, int score) RunTest(Test test)
         {
             int score = 0;
@@ -57,15 +73,15 @@ namespace KPI
                 }
                 else
                 {
-                    if (test.questions[i].ValidateAnswer(answer.answer))
+                    bool wasCorrect = test.questions[i].ValidateAnswer(answer.answer);
+                    if (wasCorrect)
                     {
-                        Console.WriteLine("Correct!");
                         score++;
                     }
-                    else
-                    {
-                        Console.WriteLine("Incorrect!");
-                    }
+                    Console.Clear();
+                    OutputAnswerReaction(wasCorrect, ConsoleColor.White);
+
+                    Console.WriteLine();
                 }
             }
             return (false, score);
