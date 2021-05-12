@@ -9,14 +9,12 @@ namespace KPI
     public class TestQuestion
     {
         public string question;
-        public string[] options;
+        public List<string> options = new();
         public int answerIndex;
 
-        public TestQuestion(string question, string[] options, int answerIndex)
+        public bool ValidateAnswer(int optionIndex)
         {
-            this.question = question;
-            this.options = options;
-            this.answerIndex = answerIndex;
+            return optionIndex == answerIndex;
         }
     }
 }

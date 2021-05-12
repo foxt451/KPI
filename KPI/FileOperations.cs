@@ -8,9 +8,9 @@ namespace KPI{
     {
         private string path;
 
-        public FileOperations(string p, string fileName)
+        public FileOperations(string path, string fileName)
         {
-            this.path = Path.Combine(p, fileName);
+            this.path = path+fileName;
             if (!File.Exists(path))
             {
                 using (File.Create(path)) { }
@@ -96,9 +96,23 @@ namespace KPI{
             return information;
         }
 
-        public bool IsExists(string login)
+        public bool IsExists(string path, string login)
         {
-            return File.Exists(@"/UserData/"+login+".csv");
+            return File.Exists(path+login+".csv");
+        }
+
+        public void NewUser(string password, string name, string birthDate, string placeOfWork, string email, string phoneNumber)
+        {
+            using (StreamWriter sw = new StreamWriter(path, false, System.Text.Encoding.Default))
+            {
+                sw.WriteLine(password);
+                sw.WriteLine("user");
+                sw.WriteLine(name);
+                sw.WriteLine(birthDate);
+                sw.WriteLine(placeOfWork);
+                sw.WriteLine(email);
+                sw.WriteLine(phoneNumber);
+            }
         }
     }
 }

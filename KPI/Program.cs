@@ -6,7 +6,8 @@ namespace KPI
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            
+                new TestOutputter().RunTest(new TestParser().ReadTestFromFile("test1"));
         }
     }
 }
