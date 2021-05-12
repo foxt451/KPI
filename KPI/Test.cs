@@ -10,6 +10,6 @@ namespace KPI
     {
         public string title;
 
-        public List<TestQuestion> questions;
+        public List<TestQuestion> questions = new();
     }
 }

@@ -9,7 +9,7 @@ namespace KPI
     class TestQuestion
     {
         public string question;
-        public List<string> options;
+        public List<string> options = new();
         public int answerIndex;
 
         public bool ValidateAnswer(int optionIndex)

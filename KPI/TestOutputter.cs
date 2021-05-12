@@ -10,11 +10,11 @@ namespace KPI
     {
         private void OutputQuestion(TestQuestion question)
         {
-            Console.WriteLine(question.question);
+            Console.Write(question.question);
             for (int i = 0; i < question.options.Count; i++)
             {
                 Console.Write($"{i + 1}) ");
-                Console.WriteLine(question.options[i]);
+                Console.Write(question.options[i]);
             }
         }
 
@@ -42,7 +42,7 @@ namespace KPI
             }
         }
 
-        public void OutputAnswerReaction(bool wasCorrect, ConsoleColor defaultColor)
+        private void OutputAnswerReaction(bool wasCorrect, ConsoleColor defaultColor)
         {
             if (wasCorrect)
             {
@@ -60,6 +60,8 @@ namespace KPI
 
         public (bool wasInterrupted, int score) RunTest(Test test)
         {
+            Console.WriteLine(test.title);
+
             int score = 0;
             for (int i = 0; i < test.questions.Count; i++)
             {
@@ -73,7 +75,7 @@ namespace KPI
                 }
                 else
                 {
-                    bool wasCorrect = test.questions[i].ValidateAnswer(answer.answer);
+                    bool wasCorrect = test.questions[i].ValidateAnswer(answer.answer - 1);
                     if (wasCorrect)
                     {
                         score++;
