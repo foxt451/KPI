@@ -104,5 +104,9 @@ namespace KPI{
                 return false;
             }
         }
+        public bool IsExists(string login)
+        {
+            return default(bool);
+        }
     }
 }

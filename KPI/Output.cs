@@ -27,10 +27,14 @@ namespace KPI
                     WrongInput("Such account doesn't exist! Try another login!");
                 }
                 //real constructor may be different
-                _user = new User(login, path, logsFile);
+                // if registration
+                //_user = new User(login, password, name, surname, email, phone, this);
+                // users exists
+                _user = new User(this);
                 Console.Write("Enter your password: ");
                 string password = Console.ReadLine();
-                bool flag = _user.Authorization(password);
+                string login = Console.ReadLine();
+                bool flag = _user.Authorization(login, password);
                 if (flag) break;
             }
             Console.Clear();
@@ -43,7 +47,7 @@ namespace KPI
             Console.Clear();
             Console.WriteLine($"Wellcome back, {name}!\n");
         }
-        public void UserCommands()
+        public void NormalUserCommands()
         {
             /*_user = new User(login, path, logsFile);
             Console.WriteLine("Your functional:");
@@ -141,6 +145,10 @@ namespace KPI
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(line);
             Console.ResetColor();
+        }
+        public void DoesNotExists(string login)
+        {
+            Console.WriteLine($"{login} does not exists!");
         }
 
         public void Success()
