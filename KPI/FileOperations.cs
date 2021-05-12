@@ -23,6 +23,29 @@ namespace KPI{
                 sw.WriteLine(line);
             }
         }
+        public void AddToLine(int index, string data) //adds data to the end of given line
+        {
+            List<string> information = new List<string>();
+            using (StreamReader sr = new StreamReader(path, System.Text.Encoding.Default))
+            {
+                int ctr = 0;
+                while (!sr.EndOfStream)
+                {
+                    string item = sr.ReadLine();
+                    string[] splited = item.Split(",", StringSplitOptions.RemoveEmptyEntries);
+                    if (ctr == index) information.Add(item+","+data);
+                    else information.Add(item);
+                    ctr++;
+                }
+            }
+            using (StreamWriter sw = new StreamWriter(path, false, System.Text.Encoding.Default))
+            {
+                foreach (string item in information)
+                {
+                    sw.WriteLine(item);
+                }
+            }
+        }
         public void ChangeInFile(int index, string line)    //replace line in file at given index by another given line
         {
             List<string> information = new List<string>();
