@@ -1,0 +1,53 @@
+Test
+[
+2
+What size of float data type?
+]
+{
+2 bytes
+}
+{
+4 bytes
+}
+{
+8 bytes
+}
+[
+2
+What size of bool data type?
+]
+{
+0 bytes
+}
+{
+1 bytes
+}
+{
+2 bytes
+}
+[
+1
+What value can have bool data type?
+]
+{
+true
+}
+{
+1
+}
+{
+"abc"
+}
+[
+1
+What range of short int (2 bytes)?
+]
+{
+-32768 to 32767
+}
+{
+0 to 65,535
+}
+{
+-127 to 127
+}

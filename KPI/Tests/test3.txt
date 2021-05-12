@@ -1,0 +1,53 @@
+Test
+[
+3
+What operator does modulo operation (Remainder after division)?
+]
+{
+"\"
+}
+{
+">>"
+}
+{
+"%"
+}
+[
+1
+Operator "&&" has meaning
+]
+{
+logical AND
+}
+{
+logical OR
+}
+{
+logical NOT
+}
+[
+2
+Lets a = 6; b = 5. Expression (a > 3) && (b > 5) evaluates to:
+]
+{
+true
+}
+{
+false
+}
+{
+none of above
+}
+[
+3
+What operator means binary OR?
+]
+{
+"&"
+}
+{
+"||"
+}
+{
+"|"
+}
