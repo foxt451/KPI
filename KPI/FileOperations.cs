@@ -84,6 +84,7 @@ namespace KPI{
             }
             return item;
         }
+
         public List<string> ReadAllFile() //returns the list of file lines
         {
             List<string> information = new List<string>();
@@ -91,22 +92,13 @@ namespace KPI{
             {
                 while (!sr.EndOfStream) information.Add(sr.ReadLine());
             }
+
             return information;
         }
 
-        public bool SignIn(string passw)    //check given password for validity
-        {
-
-            using (StreamReader sr = new StreamReader(path, System.Text.Encoding.Default))
-            {
-                string item = sr.ReadLine();
-                if (item.Equals(passw)) return true;
-                return false;
-            }
-        }
         public bool IsExists(string login)
         {
-            return default(bool);
+            return File.Exists(@"/UserData/"+login+".csv");
         }
     }
 }

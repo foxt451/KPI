@@ -48,9 +48,6 @@ namespace KPI
                         output.NormalUserCommands();
                         return true;
                     }
-                    output.Welcome();
-                    output.NormalUserCommands();
-                    return true;
                 }
             }
             output.DoesNotExists(log);

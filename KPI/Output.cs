@@ -23,7 +23,7 @@ namespace KPI
                 {
                     Console.Write("Enter your login: ");
                     login = Console.ReadLine();
-                    if (login != "" && File.Exists(@"/UserData/"+login+".csv")) break;
+                    if (login != "" && FileOperations.IsExists(login)) break;
                     WrongInput("Such account doesn't exist! Try another login!");
                 }
                 //real constructor may be different
