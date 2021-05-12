@@ -13,7 +13,7 @@ namespace KPI
             Console.WriteLine(question.question);
             for (int i = 0; i < question.options.Count; i++)
             {
-                Console.WriteLine($"{i + 1})");
+                Console.Write($"{i + 1}) ");
                 Console.WriteLine(question.options[i]);
             }
         }
@@ -63,7 +63,7 @@ namespace KPI
             int score = 0;
             for (int i = 0; i < test.questions.Count; i++)
             {
-                Console.WriteLine($"{i + 1}.");
+                Console.Write($"{i + 1}. ");
                 OutputQuestion(test.questions[i]);
 
                 var answer = GetAnswer();
