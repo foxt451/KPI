@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KPI
 {
-    class TestQuestion
+    public class TestQuestion
     {
         public string question;
         public string[] options;
