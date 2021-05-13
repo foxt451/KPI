@@ -11,7 +11,7 @@ namespace KPI
         public List<string> lectureBlocks;
         public Test test;
         
-        public Lecture(int nubmer, string title, List<string> lectureBlocks, Test test)
+        public Lecture(int number, string title, List<string> lectureBlocks, Test test)
         {
             Lecture.ID++;
             this.id = Lecture.ID;
