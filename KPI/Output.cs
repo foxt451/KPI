@@ -75,12 +75,10 @@ namespace KPI
                 Console.WriteLine("4 - to see reference\n");
                 Console.WriteLine("5 - to log out from account\n");
                 Console.Write("Enter your choice: ");
-                string choice = Console.ReadLine();
-                while (!int.TryParse(choice, out selectedMenu) || selectedMenu < 1 || selectedMenu > numberMenuItems)
-                {
-                    this.WrongInput();
-                    choice = Console.ReadLine();
-                }
+                selectedMenu = SafeReadNumberInRange(1, numberMenuItems);
+                if (selectedMenu == 1)
+                    PrintAccountSettingsOfNormalUser();
+                Console.Clear();
             }
             
             
@@ -98,6 +96,94 @@ namespace KPI
                 _user.ChangePassword(password);
             }
             else WrongInput("Such command doesn't exist!");*/
+        }
+        
+        public void PrintAccountSettingsOfNormalUser()
+        {
+            int selectedItem = -1;
+            while (selectedItem != 7)
+            {
+                Console.Clear();
+                Console.WriteLine("Account data:\n");
+                Console.WriteLine("Your login: " + this._user.login + "\n");
+                Console.WriteLine("Your password: " + passw + "\n");
+                // Console.WriteLine("Your date of birth: " + this._user.ChangeEmail() + "\n");
+                // Console.WriteLine("Your date of birth: " + this._user.ChangeName() + "\n");
+                // Console.WriteLine("Your date of birth: " + this._user.ChangeNumber() + "\n");
+                // Console.WriteLine("Your date of birth: " + this._user.ChangeBirthDate() + "\n");
+                // Console.WriteLine("Your date of birth: " + this._user.ChangePlaceOfWork() + "\n");
+                // Console.WriteLine("Your date of birth: " + this._user.ChangePassword() + "\n");
+                Console.WriteLine("1 - to change your email\n");
+                Console.WriteLine("2 - to change your name\n");
+                Console.WriteLine("3 - to change your phone number\n");
+                Console.WriteLine("4 - to change your date of birth\n");
+                Console.WriteLine("5 - to change your place of work\n");
+                Console.WriteLine("6 - to change your password\n");
+                Console.WriteLine("7 - to quit from menu\n");
+                Console.Write("Enter your input: ");
+                selectedItem = SafeReadNumberInRange(1, 7);
+                if (selectedItem == 1)
+                {
+                    Console.Write("Enter new email: ");
+                    string email = Console.ReadLine();
+                    this._user.ChangeEmail(email);
+                    Console.WriteLine("Your email successfully changed!!\n");
+                    Console.ReadKey();
+                }
+                if (selectedItem == 2)
+                {
+                    Console.Write("Enter new name: ");
+                    string name = Console.ReadLine();
+                    this._user.ChangeName(name);
+                    Console.WriteLine("Your name successfully changed!!\n");
+                    Console.ReadKey();
+                }
+                if (selectedItem == 3)
+                {
+                    Console.Write("Enter new phone number: ");
+                    string phoneNumber = Console.ReadLine();
+                    this._user.ChangeNumber(phoneNumber);
+                    Console.WriteLine("Your phone number successfully changed!!\n");
+                    Console.ReadKey();
+                }
+                if (selectedItem == 4)
+                {
+                    Console.Write("Enter new date of birth: ");
+                    string dateOfBirth = Console.ReadLine();
+                    this._user.ChangeBirthDate(dateOfBirth);
+                    Console.WriteLine("Your date of birth successfully changed!!\n");
+                    Console.ReadKey();
+                }
+                if (selectedItem == 5)
+                {
+                    Console.Write("Enter new place of work: ");
+                    string placeOfWork = Console.ReadLine();
+                    this._user.ChangePlaceOfWork(placeOfWork);
+                    Console.WriteLine("Your place of work successfully changed!!\n");
+                    Console.ReadKey();
+                }
+                if (selectedItem == 6)
+                {
+                    Console.Write("Enter new password: ");
+                    string password = Console.ReadLine();
+                    this._user.ChangePassword(password);
+                    Console.WriteLine("Your password successfully changed!!\n");
+                    Console.ReadKey();
+                }
+            }
+        }
+
+        public int SafeReadNumberInRange(int lowerBound, int upperBound)
+        {
+            int result;
+            string choice = Console.ReadLine();
+            while (!int.TryParse(choice, out result) || result < lowerBound || result > upperBound)
+            {
+                this.WrongInput("Incorrect input!!\nPlease try again: ");
+                choice = Console.ReadLine();
+            }
+
+            return result;
         }
         public void AdminCommands()
         {
