@@ -12,9 +12,9 @@ namespace KPI
         public List<Lecture> lectures;
         public LectureDataBase()
         {
-            this.lectures = this.getLectures();
+            this.lectures = this.GetLectures();
         }
-        public List<Lecture> getLectures()
+        public List<Lecture> GetLectures()
         {
             List<Lecture> lectures = new List<Lecture>();
             string[] files = Directory.GetFiles("../../../Lectures/");
@@ -50,6 +50,23 @@ namespace KPI
             }
 
             return lectures;
+        }
+
+        public void AddNewLecture(string title, List<string> blocksOfLecture)
+        {
+            int number = this.lectures.Count;
+            Lecture lecture = new Lecture(number, title, blocksOfLecture, null);
+            this.lectures.Add(lecture);
+            FileOperations fstream = new FileOperations("../../../Lectures", $"/lec_{number + 1}.txt");
+            fstream.AddToFile(title);
+            foreach (string block in blocksOfLecture)
+            {
+                fstream.AddToFile(block);
+                string separator = "";
+                for (int i = 0; i < 75; i++)
+                    separator += "-";
+                fstream.AddToFile(separator);
+            }
         }
     }
 }
