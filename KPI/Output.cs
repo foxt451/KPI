@@ -62,6 +62,27 @@ namespace KPI
         }
         public void NormalUserCommands()
         {
+            Console.Clear();
+            Console.WriteLine("Hello, " + _user.login + "! This is user Menu\n");
+            int selectedMenu = -1;
+            const int numberMenuItems = 5;
+            while (selectedMenu != numberMenuItems)
+            {
+                Console.WriteLine("1 - to see your account settings\n");
+                Console.WriteLine("2 - to see your learning progress\n");
+                Console.WriteLine("3 - to see lectures\n");
+                Console.WriteLine("4 - to see reference\n");
+                Console.WriteLine("5 - to log out from account\n");
+                Console.Write("Enter your choice: ");
+                string choice = Console.ReadLine();
+                while (!int.TryParse(choice, out selectedMenu) || selectedMenu < 1 || selectedMenu > numberMenuItems)
+                {
+                    this.WrongInput();
+                    choice = Console.ReadLine();
+                }
+            }
+            
+            
             /*_user = new User(login, path, logsFile);
             Console.WriteLine("Your functional:");
             Console.WriteLine("Enter '1' check your password \n" + "Enter '2' to check your login \n" + "Enter '3' to change your password \n");
