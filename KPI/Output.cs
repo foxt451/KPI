@@ -340,14 +340,16 @@ namespace KPI
             while (true)
             {
                 name = Console.ReadLine();
+                if (string.IsNullOrEmpty(name)) continue;
                 if (name_rgx.IsMatch(name)) break;
                 Console.Write("Incorrect input! Please, try again: ");
             }
             Console.WriteLine("Please, choose your nickname:");
-            Regex nickname_rgx = new Regex(@"^[\w]{4,12}+$");
+            Regex nickname_rgx = new Regex(@"^\w{4,12}$");
             while (true)
             {
                 login = Console.ReadLine();
+                if (string.IsNullOrEmpty(login)) continue;
                 if (!nickname_rgx.IsMatch(login)){Console.Write("Incorrect nickname! Please, try another one: "); continue;}
                 if (File.Exists(login+".csv")) {Console.Write("Such user already exists! Please, try another nickname: "); continue;}
                 break;
@@ -357,6 +359,7 @@ namespace KPI
             while (true)
             {
                 passw = Console.ReadLine();
+                if (string.IsNullOrEmpty(passw)) continue;
                 if (passw_rgx.IsMatch(passw)) break;
                 Console.Write("Such password isn't allowed! Please, try another one: ");
             }
@@ -366,6 +369,7 @@ namespace KPI
             while (true)
             {
                 birthDate = Console.ReadLine();
+                if (string.IsNullOrEmpty(birthDate)) continue;
                 if (date_rgx.IsMatch(birthDate)) break;
                 Console.Write("Incorrect date format! Please, try again: ");
             }
@@ -377,6 +381,7 @@ namespace KPI
             while (true)
             {
                 email = Console.ReadLine();
+                if (string.IsNullOrEmpty(email)) continue;
                 if (email_rgx.IsMatch(email)) break;
                 Console.Write("Incorrect email format! Please, try again: ");
             }
@@ -386,6 +391,7 @@ namespace KPI
             while (true)
             {
                 phoneNumber = Console.ReadLine();
+                if (string.IsNullOrEmpty(phoneNumber)) continue;
                 if (num_rgx.IsMatch(phoneNumber)) break;
                 Console.Write("Incorrect phone number format! Please, try again: ");
             }
