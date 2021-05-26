@@ -14,7 +14,7 @@ namespace KPI
         private string surname;
         private string email;
         private string phone;*/
-        private FileOperations fo;
+        private protected FileOperations fo;
         private Output output;
         public User(Output output) { this.output = output; fo = new FileOperations(output.path, Output.login+".csv"); }
         
