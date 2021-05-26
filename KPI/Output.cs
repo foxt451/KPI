@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace KPI
 {
@@ -220,21 +221,61 @@ namespace KPI
             string go = Console.ReadLine();
             if (go=="0") Environment.Exit(0);
             //there will be a lot of cycles and validity check
+            Regex name_rgx = new Regex(@"^[A-Z][a-z]*\s[A-Z][a-z]*$");
             Console.WriteLine("Please, enter your full name:");
-            string name = Console.ReadLine();
+            string name;
+            while (true)
+            {
+                name = Console.ReadLine();
+                if (name_rgx.IsMatch(name)) break;
+                Console.Write("Incorrect input! Please, try again: ");
+            }
             Console.WriteLine("Please, choose your nickname:");
-            login = Console.ReadLine();
+            Regex nickname_rgx = new Regex(@"^[\w]{4,12}+$");
+            while (true)
+            {
+                login = Console.ReadLine();
+                if (!nickname_rgx.IsMatch(login)){Console.Write("Incorrect nickname! Please, try another one: "); continue;}
+                if (File.Exists(login+".csv")) {Console.Write("Such user already exists! Please, try another nickname: "); continue;}
+                break;
+            }
             Console.WriteLine("Please, choose your password:");
-            passw = Console.ReadLine();
+            Regex passw_rgx = new Regex(@"^\w{8,}$");
+            while (true)
+            {
+                passw = Console.ReadLine();
+                if (passw_rgx.IsMatch(passw)) break;
+                Console.Write("Such password isn't allowed! Please, try another one: ");
+            }
             Console.WriteLine("Please, enter your date of birth:");
-            string birthDate = Console.ReadLine();
+            Regex date_rgx = new Regex(@"^\d{2}\.\d{2}\.\d{4}$");
+            string birthDate;
+            while (true)
+            {
+                birthDate = Console.ReadLine();
+                if (date_rgx.IsMatch(birthDate)) break;
+                Console.Write("Incorrect date format! Please, try again: ");
+            }
             Console.WriteLine("Please, enter your place of work or study:");
             string placeOfWork = Console.ReadLine();
             Console.WriteLine("Please, enter your email:");
-            string email = Console.ReadLine();
+            string email;
+            Regex email_rgx = new Regex(@"^[\w]+\@[a-z]+(\.[a-z])*$");
+            while (true)
+            {
+                email = Console.ReadLine();
+                if (email_rgx.IsMatch(email)) break;
+                Console.Write("Incorrect email format! Please, try again: ");
+            }
+            string phoneNumber;
             Console.WriteLine("Please, enter your phoneNumber:");
-            string phoneNumber = Console.ReadLine();
-            
+            Regex num_rgx = new Regex(@"^(\+38)?0\d{9}");
+            while (true)
+            {
+                phoneNumber = Console.ReadLine();
+                if (num_rgx.IsMatch(phoneNumber)) break;
+                Console.Write("Incorrect phone number format! Please, try again: ");
+            }
             FileOperations fo = new FileOperations(path, Output.login+".csv");
             fo.NewUser(passw, name, birthDate, placeOfWork, email, phoneNumber);
         }
