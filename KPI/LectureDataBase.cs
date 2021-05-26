@@ -16,15 +16,17 @@ namespace KPI
         }
         public List<Lecture> GetLectures()
         {
+            TestParser testParser = new TestParser();
             List<Lecture> lectures = new List<Lecture>();
             string[] files = Directory.GetFiles("../../../Lectures/");
             for (int i = 0; i < files.Length; i++)
             {
-                string name;
+                string title;
+                Test test = testParser.ReadTestFromFile($"test_{i + 1}");
                 List<string> blocksOfLecture = new List<string>();
                 using (StreamReader sr = new StreamReader(files[i]))
                 {
-                    name = sr.ReadLine();
+                    title = sr.ReadLine();
                     string blockOfLecture = "";
                     while (!sr.EndOfStream)
                     {
@@ -45,7 +47,7 @@ namespace KPI
                         blockOfLecture = "";
                     }
                 }
-                Lecture lecture = new Lecture(i + 1, name, blocksOfLecture, null);
+                Lecture lecture = new Lecture(i + 1, title, blocksOfLecture, test);
                 lectures.Add(lecture);
             }
 

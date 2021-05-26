@@ -61,7 +61,7 @@ namespace KPI
             Console.Clear();
             Console.WriteLine($"Wellcome back, {name}!\n");
         }
-        public void NormalUserCommands()
+        public void NormalUserCommands(LectureDataBase db)
         {
             Console.Clear();
             Console.WriteLine("Hello, " + _user.login + "! This is user Menu\n");
@@ -78,6 +78,8 @@ namespace KPI
                 selectedMenu = SafeReadNumberInRange(1, numberMenuItems);
                 if (selectedMenu == 1)
                     PrintAccountSettingsOfNormalUser();
+                if (selectedMenu == 3)
+                    PrintLectures(db);
                 Console.Clear();
             }
             
@@ -97,7 +99,32 @@ namespace KPI
             }
             else WrongInput("Such command doesn't exist!");*/
         }
-        
+        public void PrintLectures(LectureDataBase db)
+        {
+            int selectItem = -1;
+            LectureOutputter lectureOutputter = new LectureOutputter();
+            TestOutputter testOutputter = new TestOutputter();
+            while (selectItem != 3)
+            {
+                Console.Clear();
+                Console.WriteLine("This is lectures Menu\n");
+                for (int i = 0; i < db.GetLectures().Count; i++)
+                {
+                    Console.WriteLine($"{i + 1} --> " + db.GetLectures()[i].title);
+                }
+                Console.Write("To select a lecture, enter its number: ");
+                int numberOfLecture = SafeReadNumberInRange(1, db.GetLectures().Count);
+                lectureOutputter.OutputLecture(db.GetLectures()[numberOfLecture - 1]);
+                Console.WriteLine("1 - to choose another lecture");
+                Console.WriteLine("2 - to go to the test after this lecture");
+                Console.WriteLine("3 - to quit of lectures");
+                selectItem = SafeReadNumberInRange(1, 3);
+                if (selectItem == 2)
+                {
+                    testOutputter.RunTest(db.GetLectures()[numberOfLecture - 1].test);
+                }
+            }
+        }
         public void PrintAccountSettingsOfNormalUser()
         {
             int selectedItem = -1;
