@@ -87,14 +87,21 @@ namespace KPI
 
         private (bool interrupted, string title) ReadTitle()
         {
-            Console.WriteLine("Enter test name or q to quit:");
+            Console.WriteLine("Enter lecture number:");
             string line = Console.ReadLine();
             if (line == "q")
             {
                 return (true, "");
             } else
             {
-                return (false, line);
+                try
+                {
+                    return (false, "test_" + int.Parse(line));
+                }
+                catch
+                {
+                    return (true, "");
+                }
             }
         }
     }
