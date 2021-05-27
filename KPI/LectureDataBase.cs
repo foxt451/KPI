@@ -18,8 +18,17 @@ namespace KPI
         {
             TestParser testParser = new TestParser();
             List<Lecture> lectures = new List<Lecture>();
-            string[] files = Directory.GetFiles("../../../Lectures/");
-            for (int i = 0; i < files.Length; i++)
+            string[] systemFiles = Directory.GetFiles("../../../Lectures/");
+            List<string> files = new List<string>();
+            foreach (var systemFile in systemFiles)
+            {
+                string[] parths = systemFile.Split('.');
+                if (parths.Length > 0 && String.Compare(parths[1], "txt") == 0)
+                {
+                    files.Add(systemFile);
+                }
+            }
+            for (int i = 0; i < files.Count; i++)
             {
                 string title;
                 Test test = testParser.ReadTestFromFile($"test_{i + 1}");

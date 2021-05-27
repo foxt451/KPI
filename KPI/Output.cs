@@ -9,12 +9,17 @@ namespace KPI
     {
         public static string login;
         private static string passw;
-        public string path = @"\UserData\";
+        public string path = @"..\..\..\UserData\";
         private User _user;
+        private LectureDataBase db;
 
+        public Output(LectureDataBase lectureDB)
+        {
+            this.db = lectureDB;
+        }
         public void StartWork()
         {
-            FileOperations fo = new FileOperations("", "");
+            FileOperations fo = new FileOperations("");
             while (true)
             {
                 Console.WriteLine("Do you have an account? Enter 1 to YES or 0 to NO");
@@ -61,25 +66,25 @@ namespace KPI
             Console.Clear();
             Console.WriteLine($"Wellcome back, {name}!\n");
         }
-        public void NormalUserCommands(LectureDataBase db)
+        public void NormalUserCommands()
         {
             Console.Clear();
-            Console.WriteLine("Hello, " + _user.login + "! This is user Menu\n");
+            Console.WriteLine("Hello, " + _user.login + "! This is user Menu");
             int selectedMenu = -1;
             const int numberMenuItems = 5;
             while (selectedMenu != numberMenuItems)
             {
-                Console.WriteLine("1 - to see your account settings\n");
-                Console.WriteLine("2 - to see your learning progress\n");
-                Console.WriteLine("3 - to see lectures\n");
-                Console.WriteLine("4 - to see reference\n");
-                Console.WriteLine("5 - to log out from account\n");
+                Console.WriteLine("1 - to see your account settings");
+                Console.WriteLine("2 - to see your learning progress");
+                Console.WriteLine("3 - to see lectures");
+                Console.WriteLine("4 - to see reference");
+                Console.WriteLine("5 - to log out from account");
                 Console.Write("Enter your choice: ");
                 selectedMenu = SafeReadNumberInRange(1, numberMenuItems);
                 if (selectedMenu == 1)
                     PrintAccountSettingsOfNormalUser();
                 if (selectedMenu == 3)
-                    PrintLectures(db);
+                    PrintLectures(this.db);
                 Console.Clear();
             }
             
@@ -107,7 +112,7 @@ namespace KPI
             while (selectItem != 3)
             {
                 Console.Clear();
-                Console.WriteLine("This is lectures Menu\n");
+                Console.WriteLine("This is lectures Menu");
                 for (int i = 0; i < db.GetLectures().Count; i++)
                 {
                     Console.WriteLine($"{i + 1} --> " + db.GetLectures()[i].title);
@@ -131,23 +136,22 @@ namespace KPI
             while (selectedItem != 7)
             {
                 Console.Clear();
-                Console.WriteLine("Account data:\n");
-                Console.WriteLine("Your login: " + this._user.login + "\n");
-                Console.WriteLine("Your password: " + passw + "\n");
-                Console.WriteLine("Your name: " + this._user.GetName() + "\n");
-                Console.WriteLine("Your surname: " + this._user.GetSurname() + "\n");
-                Console.WriteLine("Your email: " + this._user.GetEmail() + "\n");
-                Console.WriteLine("Your phone number: " + this._user.GetPhone() + "\n");
-                Console.WriteLine("Your date of birth: " + this._user.GetBirdthDate() + "\n");
-                Console.WriteLine("Your place of work: " + this._user.GetPlaceOfWork() + "\n");
-                Console.WriteLine("Your password: " + this._user.GetPassword() + "\n");
-                Console.WriteLine("1 - to change your email\n");
-                Console.WriteLine("2 - to change your name\n");
-                Console.WriteLine("3 - to change your phone number\n");
-                Console.WriteLine("4 - to change your date of birth\n");
-                Console.WriteLine("5 - to change your place of work\n");
-                Console.WriteLine("6 - to change your password\n");
-                Console.WriteLine("7 - to quit from menu\n");
+                Console.WriteLine("Account data:");
+                Console.WriteLine("Your login: " + this._user.login);
+                Console.WriteLine("Your password: " + this._user.GetPassword());
+                Console.WriteLine("Your name: " + this._user.GetName());
+                Console.WriteLine("Your surname: " + this._user.GetSurname());
+                Console.WriteLine("Your email: " + this._user.GetEmail());
+                Console.WriteLine("Your phone number: " + this._user.GetPhone());
+                Console.WriteLine("Your date of birth: " + this._user.GetBirdthDate());
+                Console.WriteLine("Your place of work: " + this._user.GetPlaceOfWork());
+                Console.WriteLine("1 - to change your email");
+                Console.WriteLine("2 - to change your name");
+                Console.WriteLine("3 - to change your phone number");
+                Console.WriteLine("4 - to change your date of birth");
+                Console.WriteLine("5 - to change your place of work");
+                Console.WriteLine("6 - to change your password");
+                Console.WriteLine("7 - to quit from menu");
                 Console.Write("Enter your input: ");
                 selectedItem = SafeReadNumberInRange(1, 7);
                 if (selectedItem == 1)

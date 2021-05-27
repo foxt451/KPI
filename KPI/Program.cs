@@ -6,8 +6,9 @@ namespace KPI
     {
         static void Main(string[] args)
         {
-            
-                new TestOutputter().RunTest(new TestParser().ReadTestFromFile("test1"));
+            LectureDataBase db = new LectureDataBase();
+            Output outputter = new Output(db);
+            outputter.StartWork();
         }
     }
 }

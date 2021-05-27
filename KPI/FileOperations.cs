@@ -11,10 +11,14 @@ namespace KPI{
         public FileOperations(string path, string fileName)
         {
             this.path = path+fileName;
-            if (!File.Exists(path))
+            if (!File.Exists(this.path))
             {
-                using (File.Create(path)) { }
+                using (File.Create(this.path)) { }
             }
+        }
+        public FileOperations(string path)
+        {
+            this.path = path;
         }
         public void AddToFile(string line) //adds a line at the end of file
         {
