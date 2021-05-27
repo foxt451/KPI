@@ -311,7 +311,7 @@ namespace KPI
                     Console.WriteLine("Enter a data of the lecture (to end lecture filling use 'end'):");
                     List<string> data = new List<string>();
                     bool stop = false;
-                    while (stop)
+                    while (!stop)
                     {
                         string item = Console.ReadLine();
                         if (item.Equals("end"))
