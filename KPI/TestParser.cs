@@ -41,5 +41,10 @@ namespace KPI
                 writer.Write(json);
             }
         }
+
+        public bool Exists(string test)
+        {
+            return File.Exists(Path.Combine(TESTS_FOLDER, test + TESTS_EXTENSION));
+        }
     }
 }

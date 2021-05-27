@@ -32,7 +32,11 @@ namespace KPI
             for (int i = 0; i < files.Count; i++)
             {
                 string title;
-                Test test = testParser.ReadTestFromFile($"test_{i + 1}");
+                Test test = null;
+                if (testParser.Exists($"test_{i + 1}"))
+                {
+                     test = testParser.ReadTestFromFile($"test_{i + 1}");
+                }
                 List<string> blocksOfLecture = new List<string>();
                 using (StreamReader sr = new StreamReader(files[i]))
                 {
