@@ -24,7 +24,7 @@ namespace KPI
             {
                 int index = systemFile.LastIndexOf('.');
                 string part = systemFile.Substring(index, systemFile.Length - index);
-                if (String.Compare(part, "txt") == 0)
+                if (String.Compare(part, ".txt") == 0)
                 {
                     files.Add(systemFile);
                 }

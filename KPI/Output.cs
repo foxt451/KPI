@@ -120,6 +120,7 @@ namespace KPI
                 Console.Write("To select a lecture, enter its number: ");
                 int numberOfLecture = SafeReadNumberInRange(1, db.GetLectures().Count);
                 lectureOutputter.OutputLecture(db.GetLectures()[numberOfLecture - 1]);
+                Console.Clear();
                 Console.WriteLine("1 - to choose another lecture");
                 Console.WriteLine("2 - to go to the test after this lecture");
                 Console.WriteLine("3 - to quit of lectures");
