@@ -74,15 +74,15 @@ namespace KPI
         }
         public void ChangePlaceOfWork(string place)
         {
-            fo.ChangeInFile(2, place);
+            fo.ChangeInFile(4, place);
         }
         public void ChangeEmail(string email)
         {
-            fo.ChangeInFile(2, email);
+            fo.ChangeInFile(5, email);
         }
         public void ChangeNumber(string number)
         {
-            fo.ChangeInFile(2, number);
+            fo.ChangeInFile(6, number);
         }
     }
 }
