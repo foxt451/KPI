@@ -298,10 +298,16 @@ namespace KPI
             const int numberMenuItems = 5;
             while (selectedMenu != numberMenuItems)
             {
+                Console.WriteLine("0 - to add new test");
                 Console.WriteLine("1 - to add new lecture");
                 Console.WriteLine("2 - to log out from account");
                 Console.Write("Enter your choice: ");
-                selectedMenu = SafeReadNumberInRange(1, numberMenuItems);
+                selectedMenu = SafeReadNumberInRange(0, numberMenuItems);
+                if (selectedMenu == 0)
+                {
+                    Console.Clear();
+                    new TestCreator().CreateTestInConsole();
+                }
                 if (selectedMenu == 1)
                 {
                     Console.Clear();
