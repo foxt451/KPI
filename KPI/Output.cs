@@ -290,78 +290,48 @@ namespace KPI
         }
         public void AdminCommands()
         {
-            /*Admin admin = new Admin(login, path, logsFile);
-            Console.WriteLine("Your functional:");
-            Console.WriteLine("Enter '1' to add user \n" + "Enter '2' to remove user \n" + "Enter '3' to change user information \n" + "Enter '4' to change student's group \n" + "Enter '5' to change student's course \n" + "Enter '6' to check student's course \n" + "Enter '7' to check student's group \n" + "Enter '8' to check student's marks \n" + "Enter '9' to exit \n" + "Enter '0' to open user's menu");
-            int command = Int32.Parse(Console.ReadLine());
+            Admin admin = new Admin(this);
+            _user = admin;
             Console.Clear();
-            if (command == 9) Environment.Exit(0);
-            else if (command == 0) { UserCommands(); AdminCommands(); }
-            Console.Write("Enter user's login: ");
-            string userLogin = Console.ReadLine();
-            if (command == 1)
+            Console.WriteLine("Hello, " + _user.login + "! This is user Menu");
+            int selectedMenu = -1;
+            const int numberMenuItems = 5;
+            while (selectedMenu != numberMenuItems)
             {
-                Console.WriteLine("Enter a password for new user:");
-                string password = Console.ReadLine();
-                Console.WriteLine("Enter a access level for new user:");
-                string accessLevel = Console.ReadLine();
-                if (accessLevel.Equals("1"))
+                Console.WriteLine("1 - to add new lecture");
+                Console.WriteLine("2 - to log out from account");
+                Console.Write("Enter your choice: ");
+                selectedMenu = SafeReadNumberInRange(1, numberMenuItems);
+                if (selectedMenu == 1)
                 {
-                    string group;
-                    while (true)
-                    {
-                        Console.Write("Enter a group for new student: ");
-                        group = Console.ReadLine();
-                        if (group.Length == 4 && Char.IsLetter(group[0]) && Char.IsLetter(group[1]) &&
-                            Char.IsDigit(group[2]) && Char.IsDigit(group[3])) break;
-                        Console.Clear();
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        WrongInput("Invalid group name!");
-                        Console.ResetColor();
-                    }
-                    string course;
-                    while (true)
-                    {
-                        Console.Write("Enter a course for new student: ");
-                        course = Console.ReadLine();
-                        if (Int32.Parse(course) > 0 && Int32.Parse(course) < 7) break;
-                        Console.Clear();
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        WrongInput("Invalid course number! Try again!");
-                        Console.ResetColor();
-                    }
-                    admin.AddUser(userLogin, password, accessLevel, group, course);
-                }
-                else admin.AddUser(userLogin, password, accessLevel);
-            }
-            else if (command == 2) admin.RemoveUser(userLogin);
-            else if (command == 3)
-            {
-                Console.Write($"Enter a new {userLogin}'s password: ");
-                string passw = Console.ReadLine();
-                admin.ChangeUsersPassword(userLogin, passw);
-            }
-            else if (command == 4)
-            {
-                string group;
-                while (true)
-                {
-                    Console.WriteLine("Enter a group which you want to join (Example: IP01");
-                    Console.Write("Group: ");
-                    group = Console.ReadLine();
-                    if (group.Length == 4 && Char.IsLetter(group[0]) && Char.IsLetter(group[1]) &&
-                        Char.IsDigit(group[2]) && Char.IsDigit(group[3])) break;
                     Console.Clear();
-                    WrongInput("Invalid group name!");
+                    Console.Write("Enter a title of the lecture:");
+                    string title = Console.ReadLine();
+                    Console.Clear();
+                    Console.WriteLine("Enter a data of the lecture (to end lecture filling use 'end'):");
+                    List<string> data = new List<string>();
+                    bool stop = false;
+                    while (stop)
+                    {
+                        string item = Console.ReadLine();
+                        if (item.Equals("end"))
+                        {
+                            stop = true;
+                            break;
+                        }
+                        data.Add(item);
+                    }
+                    admin.AddLecture(title, data);
+
                 }
-                admin.ChangeGroup(userLogin, group);
+
+                if (selectedMenu == 2)
+                {
+                    Console.Clear();
+                    Console.WriteLine($"See you soon, {admin.login}");
+                    StartWork();
+                }
             }
-            else if (command == 5) admin.ChangeCourse(userLogin);
-            else if (command == 6) admin.CheckCourse(userLogin);
-            else if (command == 7) admin.CheckGroup(userLogin);
-            else if (command == 8) admin.CheckMarks(userLogin);
-            else WrongInput("Such command doesn't exist!");
-            AdminCommands();*/
         }
 
         public void WrongInput(string line = "Incorrect input!")
