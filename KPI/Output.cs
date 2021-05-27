@@ -11,8 +11,9 @@ namespace KPI
         private static string passw;
         public string path = @"..\..\..\UserData\";
         private User _user;
+        private NormalUser _normalUser;
         private LectureDataBase db;
-
+    
         public Output(LectureDataBase lectureDB)
         {
             this.db = lectureDB;
@@ -50,6 +51,7 @@ namespace KPI
                 if (registered == "0")
                 {
                     Registration();
+                    _user = new User(this);
                     _user.Authorization(login, passw);
                 }
                 else
@@ -68,8 +70,9 @@ namespace KPI
         }
         public void NormalUserCommands()
         {
+            this._normalUser = new NormalUser(this);
             Console.Clear();
-            Console.WriteLine("Hello, " + _user.login + "! This is user Menu");
+            Console.WriteLine("Hello, " + this._normalUser.login + "! This is user Menu");
             int selectedMenu = -1;
             const int numberMenuItems = 5;
             while (selectedMenu != numberMenuItems)
@@ -83,6 +86,8 @@ namespace KPI
                 selectedMenu = SafeReadNumberInRange(1, numberMenuItems);
                 if (selectedMenu == 1)
                     PrintAccountSettingsOfNormalUser();
+                if (selectedMenu == 2)
+                    PrintProgressOfNormalUser();
                 if (selectedMenu == 3)
                     PrintLectures(this.db);
                 Console.Clear();
@@ -120,16 +125,94 @@ namespace KPI
                 Console.Write("To select a lecture, enter its number: ");
                 int numberOfLecture = SafeReadNumberInRange(1, db.GetLectures().Count);
                 lectureOutputter.OutputLecture(db.GetLectures()[numberOfLecture - 1]);
+                _normalUser.readLection(numberOfLecture - 1);
+                // _normalUser.loadProgress();
                 Console.Clear();
                 Console.WriteLine("1 - to choose another lecture");
                 Console.WriteLine("2 - to go to the test after this lecture");
-                Console.WriteLine("3 - to quit of lectures");
+                Console.WriteLine("3 - to quit from lectures");
                 selectItem = SafeReadNumberInRange(1, 3);
                 if (selectItem == 2)
                 {
-                    testOutputter.RunTest(db.GetLectures()[numberOfLecture - 1].test);
+                    (bool wasInterrupted, int score) = testOutputter.RunTest(db.GetLectures()[numberOfLecture - 1].test);
+                    if (!wasInterrupted)
+                    {
+                        this._normalUser.takeTest(numberOfLecture - 1, score);
+                        // this._normalUser.loadProgress();
+                    }
                 }
             }
+        }
+
+        public void PrintProgressOfNormalUser()
+        {
+            this._normalUser.loadProgress();
+            for (int i = 0; i < 69;i++)
+                Console.Write('-');
+            Console.WriteLine();
+            Console.Write('|');
+            Console.Write("#".PadLeft(5));
+            Console.Write('|');
+            Console.Write("Lecture".PadLeft(50));
+            Console.Write('|');
+            Console.Write("Viewed".PadLeft(10));
+            Console.WriteLine('|');
+            for (int j = 0; j < 69; j++)
+                Console.Write('-');
+            Console.WriteLine();
+            for (int i = 0; i < this.db.GetLectures().Count; i++)
+            {
+                Console.Write('|');
+                Console.Write($"{i + 1}".PadLeft(5));
+                Console.Write('|');
+                Console.Write(db.GetLectures()[i].title.PadLeft(50));
+                Console.Write('|');
+                if (this._normalUser.getProgress()[i] == 1)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write("+".PadLeft(10));
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("-".PadLeft(10));
+                    Console.ResetColor();
+                }
+                Console.WriteLine('|');
+                for (int j = 0; j < 69;j++)
+                    Console.Write('-');
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            Console.WriteLine();
+            for (int j = 0; j < 69; j++)
+                Console.Write('-');
+            Console.WriteLine();
+            Console.Write('|');
+            Console.Write("#".PadLeft(5));
+            Console.Write('|');
+            Console.Write("Test".PadLeft(50));
+            Console.Write('|');
+            Console.Write("Result".PadLeft(10));
+            Console.WriteLine('|');
+            for (int i = 0; i < 69;i++)
+                Console.Write('-');
+            Console.WriteLine();
+            for (int i = 0; i < this.db.GetLectures().Count; i++)
+            {
+                Console.Write('|');
+                Console.Write($"{i + 1}".PadLeft(5));
+                Console.Write('|');
+                Console.Write(db.GetLectures()[i].test.title.PadLeft(50));
+                Console.Write('|');
+                Console.Write(this._normalUser.getResult()[i].ToString().PadLeft(10));
+                Console.WriteLine('|');
+                for (int j = 0; j < 69; j++)
+                    Console.Write('-');
+                Console.WriteLine();
+            }
+            Console.ReadKey();
         }
         public void PrintAccountSettingsOfNormalUser()
         {
@@ -138,14 +221,14 @@ namespace KPI
             {
                 Console.Clear();
                 Console.WriteLine("Account data:");
-                Console.WriteLine("Your login: " + this._user.login);
-                Console.WriteLine("Your password: " + this._user.GetPassword());
-                Console.WriteLine("Your name: " + this._user.GetName());
-                Console.WriteLine("Your surname: " + this._user.GetSurname());
-                Console.WriteLine("Your email: " + this._user.GetEmail());
-                Console.WriteLine("Your phone number: " + this._user.GetPhone());
-                Console.WriteLine("Your date of birth: " + this._user.GetBirdthDate());
-                Console.WriteLine("Your place of work: " + this._user.GetPlaceOfWork());
+                Console.WriteLine("Your login: " + this._normalUser.login);
+                Console.WriteLine("Your password: " + this._normalUser.GetPassword());
+                Console.WriteLine("Your name: " + this._normalUser.GetName());
+                Console.WriteLine("Your surname: " + this._normalUser.GetSurname());
+                Console.WriteLine("Your email: " + this._normalUser.GetEmail());
+                Console.WriteLine("Your phone number: " + this._normalUser.GetPhone());
+                Console.WriteLine("Your date of birth: " + this._normalUser.GetBirdthDate());
+                Console.WriteLine("Your place of work: " + this._normalUser.GetPlaceOfWork());
                 Console.WriteLine("1 - to change your email");
                 Console.WriteLine("2 - to change your name");
                 Console.WriteLine("3 - to change your phone number");
@@ -159,7 +242,7 @@ namespace KPI
                 {
                     Console.Write("Enter new email: ");
                     string email = Console.ReadLine();
-                    this._user.ChangeEmail(email);
+                    this._normalUser.ChangeEmail(email);
                     Console.WriteLine("Your email successfully changed!!\n");
                     Console.ReadKey();
                 }
@@ -167,7 +250,7 @@ namespace KPI
                 {
                     Console.Write("Enter new name: ");
                     string name = Console.ReadLine();
-                    this._user.ChangeName(name);
+                    this._normalUser.ChangeName(name);
                     Console.WriteLine("Your name successfully changed!!\n");
                     Console.ReadKey();
                 }
@@ -175,7 +258,7 @@ namespace KPI
                 {
                     Console.Write("Enter new phone number: ");
                     string phoneNumber = Console.ReadLine();
-                    this._user.ChangeNumber(phoneNumber);
+                    this._normalUser.ChangeNumber(phoneNumber);
                     Console.WriteLine("Your phone number successfully changed!!\n");
                     Console.ReadKey();
                 }
@@ -183,7 +266,7 @@ namespace KPI
                 {
                     Console.Write("Enter new date of birth: ");
                     string dateOfBirth = Console.ReadLine();
-                    this._user.ChangeBirthDate(dateOfBirth);
+                    this._normalUser.ChangeBirthDate(dateOfBirth);
                     Console.WriteLine("Your date of birth successfully changed!!\n");
                     Console.ReadKey();
                 }
@@ -191,7 +274,7 @@ namespace KPI
                 {
                     Console.Write("Enter new place of work: ");
                     string placeOfWork = Console.ReadLine();
-                    this._user.ChangePlaceOfWork(placeOfWork);
+                    this._normalUser.ChangePlaceOfWork(placeOfWork);
                     Console.WriteLine("Your place of work successfully changed!!\n");
                     Console.ReadKey();
                 }
@@ -199,7 +282,7 @@ namespace KPI
                 {
                     Console.Write("Enter new password: ");
                     string password = Console.ReadLine();
-                    this._user.ChangePassword(password);
+                    this._normalUser.ChangePassword(password);
                     Console.WriteLine("Your password successfully changed!!\n");
                     Console.ReadKey();
                 }
@@ -383,7 +466,7 @@ namespace KPI
             string placeOfWork = Console.ReadLine();
             Console.WriteLine("Please, enter your email:");
             string email;
-            Regex email_rgx = new Regex(@"^[\w]+\@[a-z]+(\.[a-z])*$");
+            Regex email_rgx = new Regex(@"^\w+@[a-z]+(.[a-z])*$");
             while (true)
             {
                 email = Console.ReadLine();

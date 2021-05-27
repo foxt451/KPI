@@ -10,6 +10,8 @@ namespace KPI
         
         public NormalUser(Output output) : base(output)
         {
+            this.progress = new List<int>();
+            this.results = new List<int>();
         }
 
         public void readLection(int indLection)
@@ -36,6 +38,10 @@ namespace KPI
         {
             string[] progressString = fo.GetLine(7).Split(',');
             string[] resultsString = fo.GetLine(8).Split(',');
+            while (this.progress.Count < progressString.Length)
+                this.progress.Add(0);
+            while (this.results.Count < progressString.Length)
+                this.results.Add(0);
             for (int i = 0; i < progressString.Length; i++)
             {
                 progress[int.Parse(progressString[i])] = 1;
