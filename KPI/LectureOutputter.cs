@@ -28,6 +28,10 @@ namespace KPI
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("n - to go to the next part of lecture");
                     }
+                    else
+                    {
+                        Console.WriteLine("t - go to the associated test");
+                    }
                 }
 
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -48,6 +52,17 @@ namespace KPI
                     {
                         if (numberOfLectureBlock > 0)
                             numberOfLectureBlock--;
+                    }
+                    if (choice[0] == 't')
+                    {
+                        if (lecture.test != null)
+                        {
+                            new TestOutputter().RunTest(lecture.test);
+                        }
+                        else
+                        {
+                            Console.WriteLine("No test for this lecture!");
+                        }
                     }
                 }
             }
