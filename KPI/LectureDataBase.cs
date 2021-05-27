@@ -22,8 +22,9 @@ namespace KPI
             List<string> files = new List<string>();
             foreach (var systemFile in systemFiles)
             {
-                string[] parths = systemFile.Split('.');
-                if (parths.Length > 0 && String.Compare(parths[1], "txt") == 0)
+                int index = systemFile.LastIndexOf('.');
+                string part = systemFile.Substring(index, systemFile.Length - index);
+                if (String.Compare(part, "txt") == 0)
                 {
                     files.Add(systemFile);
                 }
