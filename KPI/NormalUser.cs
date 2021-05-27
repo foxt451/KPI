@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace KPI
@@ -15,11 +16,52 @@ namespace KPI
         public void readLection(int indLection)
         {
             progress[indLection] = 1;
+            results[indLection] = 0;
+            string toFile = "";
+            for (int i = 0; i < progress.Count; i++)
+            {
+                toFile += Convert.ToString(progress[i]);
+                if (i != progress.Count - 1)
+                {
+                    toFile += ",";
+                }
+            }
+            fo.AddToLine(7,toFile);
+            toFile = "";
+            for (int i = 0; i < results.Count; i++)
+            {
+                toFile += Convert.ToString(results[i]);
+                if (i != results.Count - 1)
+                {
+                    toFile += ",";
+                }
+            }
+            fo.AddToLine(8, toFile);
         }
 
         public void takeTest(int indTest, int result)
         {
             results[indTest] = result;
+            string toFile = "";
+            for (int i = 0; i < progress.Count; i++)
+            {
+                toFile += Convert.ToString(progress[i]);
+                if (i != progress.Count - 1)
+                {
+                    toFile += ",";
+                }
+            }
+            fo.AddToLine(7,toFile);
+            toFile = "";
+            for (int i = 0; i < results.Count; i++)
+            {
+                toFile += Convert.ToString(results[i]);
+                if (i != results.Count - 1)
+                {
+                    toFile += ",";
+                }
+            }
+            fo.AddToLine(8, toFile);
         }
 
         public List<int> getProgress()
