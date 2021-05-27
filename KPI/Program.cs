@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace KPI
 {
@@ -7,7 +8,8 @@ namespace KPI
         static void Main(string[] args)
         {
             LectureDataBase db = new LectureDataBase();
-            Output outputter = new Output(db);
+            Dictionary glossary = new Dictionary();
+            Output outputter = new Output(db, glossary);
             outputter.StartWork();
         }
     }

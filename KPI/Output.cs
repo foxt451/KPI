@@ -13,10 +13,12 @@ namespace KPI
         private User _user;
         private NormalUser _normalUser;
         private LectureDataBase db;
+        private Dictionary glossary;
     
-        public Output(LectureDataBase lectureDB)
+        public Output(LectureDataBase lectureDB, Dictionary dict)
         {
             this.db = lectureDB;
+            this.glossary = dict;
         }
         public void StartWork()
         {
@@ -90,8 +92,36 @@ namespace KPI
                     PrintProgressOfNormalUser();
                 if (selectedMenu == 3)
                     PrintLectures(this.db);
+                if (selectedMenu == 4)
+                    DictionaryMenu();
                 Console.Clear();
             }
+        }
+
+        public void DictionaryMenu()
+        {
+            Console.WriteLine("This is dictionary menu");
+            Console.WriteLine("1 - to find method in dictionary");
+            Console.WriteLine("2 - to print dictionary");
+            Console.WriteLine("3 - to quit from menu");
+            int choice = SafeReadNumberInRange(1, 3);
+            if (choice == 1)
+            {
+                Console.Write("Enter your search query: ");
+                string query = Console.ReadLine();
+                string result = this.glossary.findMethod(query);
+                if (result == "")
+                    Console.WriteLine("Not found");
+                else
+                {
+                    Console.WriteLine(result);
+                }
+            }
+            if (choice == 2)
+            {
+                glossary.printDictionary();
+            }
+            Console.ReadKey();
         }
         public void PrintLectures(LectureDataBase db)
         {
