@@ -17,6 +17,7 @@ namespace KPI
 
         public void readLection(int indLection)
         {
+            loadProgress();
             progress[indLection] = 1;
             results[indLection] = 0;
             string toFile = "";
@@ -28,7 +29,7 @@ namespace KPI
                     toFile += ",";
                 }
             }
-            fo.AddToLine(7,toFile);
+            fo.ChangeInFile(7,toFile);
             toFile = "";
             for (int i = 0; i < results.Count; i++)
             {
@@ -38,11 +39,12 @@ namespace KPI
                     toFile += ",";
                 }
             }
-            fo.AddToLine(8, toFile);
+            fo.ChangeInFile(8, toFile);
         }
 
         public void takeTest(int indTest, int result)
         {
+            loadProgress();
             results[indTest] = result;
             string toFile = "";
             for (int i = 0; i < progress.Count; i++)
@@ -53,7 +55,7 @@ namespace KPI
                     toFile += ",";
                 }
             }
-            fo.AddToLine(7,toFile);
+            fo.ChangeInFile(7,toFile);
             toFile = "";
             for (int i = 0; i < results.Count; i++)
             {
@@ -63,7 +65,7 @@ namespace KPI
                     toFile += ",";
                 }
             }
-            fo.AddToLine(8, toFile);
+            fo.ChangeInFile(8, toFile);
         }
 
         public List<int> getProgress()
