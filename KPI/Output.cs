@@ -92,22 +92,6 @@ namespace KPI
                     PrintLectures(this.db);
                 Console.Clear();
             }
-            
-            
-            /*_user = new User(login, path, logsFile);
-            Console.WriteLine("Your functional:");
-            Console.WriteLine("Enter '1' check your password \n" + "Enter '2' to check your login \n" + "Enter '3' to change your password \n");
-            int command = Int32.Parse(Console.ReadLine());
-            Console.Clear();
-            if (command == 1) _user.ViewPassword();
-            else if (command == 2) Console.WriteLine($"Your login: {login}");
-            else if (command == 3)
-            {
-                Console.WriteLine("Enter a new password:");
-                string password = Console.ReadLine();
-                _user.ChangePassword(password);
-            }
-            else WrongInput("Such command doesn't exist!");*/
         }
         public void PrintLectures(LectureDataBase db)
         {
@@ -122,11 +106,15 @@ namespace KPI
                 {
                     Console.WriteLine($"{i + 1} --> " + db.GetLectures()[i].title);
                 }
+                Console.WriteLine("1 - to select a lecture to view");
+                Console.WriteLine("2 - to quit");
+                int choice = SafeReadNumberInRange(1, 2);
+                if (choice == 2)
+                    break;
                 Console.Write("To select a lecture, enter its number: ");
                 int numberOfLecture = SafeReadNumberInRange(1, db.GetLectures().Count);
                 lectureOutputter.OutputLecture(db.GetLectures()[numberOfLecture - 1]);
                 _normalUser.readLection(numberOfLecture - 1);
-                // _normalUser.loadProgress();
                 Console.Clear();
                 Console.WriteLine("1 - to choose another lecture");
                 Console.WriteLine("2 - to go to the test after this lecture");
@@ -138,7 +126,6 @@ namespace KPI
                     if (!wasInterrupted)
                     {
                         this._normalUser.takeTest(numberOfLecture - 1, score);
-                        // this._normalUser.loadProgress();
                     }
                 }
             }
